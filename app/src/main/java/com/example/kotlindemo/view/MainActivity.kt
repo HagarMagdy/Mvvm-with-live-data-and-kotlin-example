@@ -13,6 +13,12 @@ import com.example.kotlindemo.R
 import com.example.kotlindemo.model.Blog
 import com.example.kotlindemo.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import android.databinding.DataBindingUtil
+import com.example.kotlindemo.databinding.ActivityMainBinding
+import android.support.v7.widget.RecyclerView
+
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,7 +27,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+//        setContentView(R.layout.activity_main)
+        val activityMainBinding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
         setPopularBlog()
