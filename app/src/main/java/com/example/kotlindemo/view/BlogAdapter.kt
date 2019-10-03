@@ -16,6 +16,7 @@ import java.lang.Exception
 import android.support.annotation.NonNull
 import com.example.kotlindemo.databinding.BlogItemBinding
 import android.databinding.DataBindingUtil
+import com.example.kotlindemo.viewmodel.MainViewModel
 
 
 class BlogAdapter(var blogList: List<Blog>?) : RecyclerView.Adapter<BlogAdapter.ViewHolder>() {
@@ -37,6 +38,7 @@ class BlogAdapter(var blogList: List<Blog>?) : RecyclerView.Adapter<BlogAdapter.
             LayoutInflater.from(parent.context),
             parent, false
         )
+        blogItemBinding.viewModel = MainViewModel()
         return ViewHolder(blogItemBinding)
     }
 

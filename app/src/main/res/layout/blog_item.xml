@@ -75,7 +75,7 @@
                 android:textColor="@color/blue"
                 android:text="@{blog.link}"
                 android:textSize="15sp"
-                android:onClick="@{view -> viewModel.openLink(view,blog)}"
+                android:onClick="@{() -> viewModel.openLink(blog,context)}"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
