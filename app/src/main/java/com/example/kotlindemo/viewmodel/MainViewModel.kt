@@ -1,30 +1,50 @@
 package com.example.kotlindemo.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.ViewModel
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
+import android.arch.lifecycle.*
 import android.util.Log
-import android.view.View
-import android.widget.Toast
 import com.example.kotlindemo.model.Blog
+import com.example.kotlindemo.networking.RestApiService
+
+import javax.inject.Inject
+import android.arch.lifecycle.LiveData
+import com.example.kotlindemo.model.BlogWrapper
+import com.example.kotlindemo.networking.ApiResponse
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class MainViewModel() : ViewModel() {
-    val moviesRepository = BlogRepository()
-    val allBlogs: LiveData<List<Blog>> get() = moviesRepository.getMutableLiveData()
-
-    override fun onCleared() {
-        super.onCleared()
-        moviesRepository.completeJob.cancel()
+    private var restApiService: RestApiService? = null
+//    val returnedBlogs: LiveData<ApiResponse> get() = getBlogs()
+    val apiResponse:MutableLiveData<ApiResponse>  =  MutableLiveData()
+    @Inject
+    constructor(restApiService: RestApiService) : this() {
+        Log.i("DebugTag", "VIEW MODEL")
+        this.restApiService = restApiService
     }
 
-   fun openLink( blog: Blog,context: Context){
-            val intent = Intent()
-            intent.setAction(Intent.ACTION_VIEW)
-            intent.addCategory(Intent.CATEGORY_BROWSABLE)
-            intent.setData(Uri.parse(blog.link))
-            context.startActivity(intent)
+
+    fun getBlogs(): LiveData<ApiResponse> {
+        Log.i("DebugTag", "getBlogs")
+        val call = restApiService!!.getPopularBlog()
+        call.enqueue(object : Callback<BlogWrapper> {
+            override fun onResponse(call: Call<BlogWrapper>, response: Response<BlogWrapper>) {
+                if (response.code() == 200) {
+
+                    apiResponse.value= ApiResponse(response.body()!!.blog!!)
+                }
+            }
+
+
+
+            override fun onFailure(call: Call<BlogWrapper>, t: Throwable) {
+                apiResponse.value = ApiResponse(t)
+            }
+        })
+
+        return apiResponse
     }
+
 
 }

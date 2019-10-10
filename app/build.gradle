@@ -54,8 +54,24 @@ dependencies {
 
 //    kapt 'com.android.dataBindinging:compiler:3.1.4'
 
-    implementation 'com.google.dagger:dagger-android:2.15'
-    implementation 'com.google.dagger:dagger-android-support:2.11'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.13'
+    implementation 'com.google.dagger:dagger-android:2.22'
+    implementation 'com.google.dagger:dagger-android-support:2.22'
+    kapt 'com.google.dagger:dagger-android-processor:2.22'
+    kapt 'com.google.dagger:dagger-compiler:2.22'
+    implementation 'com.google.dagger:dagger:2.22'
+
+
+    // RxJava
+    def rxjava_version = '2.1.1'
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+
+    // Rx-Retrofit Call Adapter
+    def rxcalladapter_version = '2.5.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version" // Retrofit call adapter
+
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+// Reactive Streams (convert Observable to LiveData)
+    def reactivestreams_version = "1.1.1"
+    implementation "android.arch.lifecycle:reactivestreams:$reactivestreams_version"
+
 }
